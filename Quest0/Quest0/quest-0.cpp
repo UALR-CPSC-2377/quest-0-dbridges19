@@ -83,15 +83,24 @@ int main () {
 }
 
 bool isGameDone (string currentGuess) {
-	if (currentGuessNumber == 4) { //If they have 4 guesses, it returns true and prints game over.
+
+	int asterickCount = currentGuessString.length(); //Number of Astericks 
+	for (int i = 0; i < currentGuessString.length(); i++) { //Cycle through string to see if any astericks are left.
+		if (currentGuessString[i] != '*') {
+			asterickCount -= 1;
+		}
+	}
+
+	if ((currentGuessNumber == 4) || (asterickCount == 0)) { //If they have 4 guesses, it returns true and prints game over.
 		return true;
-		printGameOver(currentGuessString);
+		isGameSuccessful(currentGuess);
 	}
 	else {
 		return false;
 	}
-	
 
+	
+	
 
     /*  This function determines if the game is over */
 
@@ -99,6 +108,13 @@ bool isGameDone (string currentGuess) {
 }
 
 bool isGameSuccessful (string currentGuess) {
+	if (currentGuess == correctCountry) {
+		return true;
+	}
+	if(currentGuessNumber == 4){
+		return false;
+	}
+
 
     /*  This function determines if a player succesfully
         guessed all of the characters
@@ -111,7 +127,7 @@ void printGameOver (string currentGuess) {
 	if (isGameSuccessful(currentGuessString) == true) {
 		cout << "CONGRATS";
 	}
-	if (isGameDone(currentGuessString) == true) {
+	if (isGameSuccessful(currentGuessString) == false) {
 		cout << "YOU FAILED";
 	}
 
