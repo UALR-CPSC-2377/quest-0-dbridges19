@@ -83,12 +83,23 @@ int main () {
 }
 
 bool isGameDone (string currentGuess) {
+	if (currentGuessNumber == 4) { //If they have 4 guesses, it returns true and prints game over.
+		return true;
+		printGameOver(currentGuessString);
+	}
+	else {
+		return false;
+	}
+	
+
+
     /*  This function determines if the game is over */
 
     return false; // placeholder
 }
 
 bool isGameSuccessful (string currentGuess) {
+
     /*  This function determines if a player succesfully
         guessed all of the characters
     */
@@ -97,29 +108,39 @@ bool isGameSuccessful (string currentGuess) {
 }
 
 void printGameOver (string currentGuess) {
-    /*
+	if (isGameSuccessful(currentGuessString) == true) {
+		cout << "CONGRATS";
+	}
+	if (isGameDone(currentGuessString) == true) {
+		cout << "YOU FAILED";
+	}
+
+	/*
         This function will print out the game board with a message at the bottom
         "CONGRATS" if the the player was successful and "YOU FAILED" if they werent.
     */
 }
 
 void printGameBoard (string guess) {
+
 	//Line 1
 	cout << "+";
 	for (int i = 0; i < correctCountry.size() + ((padding *2)); i++) { //Takes length of the correctCountry, adds padding to it, doubled for both sides.
 		cout << "-";
 	}
 	cout << "+" << endl;
+
 	//Line 2
 	cout << "|";
 	for (int i = 0; i < padding; i++) {
 		cout << " ";
 	}
-	cout << correctCountry;
+	cout << currentGuessString; //Remember to change this back to currentGuessString
 	for (int i = 0; i < padding; i++) {
 		cout << " ";
 	}
 	cout << "|" << endl;
+
 	//Line 3
 	cout << "|";
 	for (int i = 0; i < padding; i++) {
@@ -132,6 +153,7 @@ void printGameBoard (string guess) {
 		cout << " ";
 	}
 	cout << "|" << endl;
+
 	//Line 4
 	cout << "+";
 	for (int i = 0; i < correctCountry.size() + ((padding * 2)); i++) { 
@@ -148,21 +170,39 @@ void printGameBoard (string guess) {
 }
 
 void printNumberOfTries () {
+	cout << "NUMBER OF TRIES: " << currentGuessNumber<< endl;
     /* this function will print out the number of tries that the user has attempted
         as well as a message
     */
 }
 
-char processUserInput () {
+char processUserInput () { //Asks for userGuess, returns it. 
+	cout << "Enter a Guess!: ";
+	char userGuess;
+	cin >> userGuess;
     /*
         This function will print out a message for the user to enter a character
         The character will then be returned,
     */
 
-    return 'n'; // placeholder
+    return userGuess; // placeholder
 }
 
 void fillLetters (char guessChar, string secretWord) {
+	int matches = 0; //To record if the user had a character match.
+	for (int i = 0; i < secretWord.length(); i++) {
+		if (guessChar == secretWord[i]) {
+			currentGuessString[i] = guessChar;
+			matches += 1;
+		}
+	}
+
+	if (matches == 0) { //If the user had no matches after the loop has gone through the entire string, add 1 to currentGuessNumber
+		currentGuessNumber += 1;
+	}
+
+	
+
     /*
         This function will modify the global variable currentGuessString.
         If any characters in the secretWord match with the guessChar, those
