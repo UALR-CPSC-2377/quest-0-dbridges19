@@ -124,6 +124,7 @@ bool isGameSuccessful (string currentGuess) {
 }
 
 void printGameOver (string currentGuess) {
+	printGameBoard(currentGuessString);
 	if (isGameSuccessful(currentGuessString) == true) {
 		cout << "CONGRATS";
 	}
